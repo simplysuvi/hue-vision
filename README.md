@@ -1,2 +1,7 @@
-# hue-vision-demo
-Demo project using TensorFlow.js for detection &amp; tracking of eye movement through webcam in browser.
+# HUE Vision
+This is a demo web application to try out TensorFlow.js.
+The neural network model detects & learns to track your eye movement through your webcam.
+
+
+## Instruction
+Open index.html in a browser like Chrome or Firefox and follow the instructions on screen.
