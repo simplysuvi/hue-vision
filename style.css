@@ -125,9 +125,9 @@ button {
   z-index: 11;
   cursor: pointer;
   font-size: 10pt;
-  padding: 0.125em 0em;
+  padding: 0.5em;
   font-weight: bold;
-  margin: 0.1em;
+  margin: 0.3em;
   width: 140px;
   font-family: 'Source Code Pro', monospace;
 }
