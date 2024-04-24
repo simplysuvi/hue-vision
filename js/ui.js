@@ -23,7 +23,7 @@ window.ui = {
 
   onWebcamEnabled: function() {
     this.state = 'finding face';
-    this.showInfo("Thanks! Now let's find your face! 🤨", true);
+    this.showInfo("Thanks! Now let's detect your face!", true);
   },
 
   onFoundFace: function() {
@@ -31,8 +31,8 @@ window.ui = {
       this.state = 'collecting';
       this.readyToCollect = true;
       this.showInfo(
-        "<h3>Let's start! 🙂</h3>" +
-          'Collect data points by moving your mouse and following the cursor with your eyes and hitting the space key repeatedly in a simultaneous manner. 👀',
+        "<h3>Let's start!</h3>" +
+          'Collect data points by moving your mouse and following the cursor with your eyes and hitting the space key repeatedly in a simultaneous manner.',
         true,
       );
     }
@@ -55,8 +55,8 @@ window.ui = {
     if (this.state == 'collecting' && this.nExamples == 25) {
       this.showInfo(
         '<h3>Great job! 👌</h3>' +
-          "Now that you have a handful of examples, let's train the neural network model!<br> " +
-          'Hit the Start Training button in the top right corner!',
+          "Now that you have a handful of samples, let's train the machine learning model!<br> " +
+          'Hit the `Start Training` button in the top right corner!',
       );
     }
     if (this.state == 'trained' && this.nExamples == 50) {
