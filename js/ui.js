@@ -62,7 +62,7 @@ window.ui = {
     if (this.state == 'trained' && this.nExamples == 50) {
       this.showInfo(
         '<h3>Fantastic! 👏</h3>' +
-          "You've collected lots of data points. Let's try training our baby model again!",
+          "You've collected lots of data points. Let's try training our model again!",
       );
     }
     if (nTrain > 0 && nVal > 0) {
