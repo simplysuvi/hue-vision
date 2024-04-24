@@ -103,13 +103,13 @@ a {
   right: 0;
   width: 300px;
   background-color: lightblue;
-  padding: 0.5em;
+  padding: 1em;
   font-weight: bold;
 }
 
 #training table {
   width: 100%;
-  font-size: 16pt;
+  font-size: 15pt;
 }
 
 #training table td:nth-child(2) {
