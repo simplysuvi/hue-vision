@@ -104,12 +104,12 @@ a {
   width: 300px;
   background-color: #92b19f45;
   padding: 1em;
-  font-weight: bold;
 }
 
 #training table {
   width: 100%;
   font-size: 15pt;
+  font-weight: bold;
 }
 
 #training table td:nth-child(2) {
@@ -126,7 +126,6 @@ button {
   cursor: pointer;
   font-size: 10pt;
   padding: 0.5em;
-  font-weight: bold;
   margin: 0.3em;
   width: 140px;
   font-family: 'Roboto';
