@@ -2,7 +2,7 @@ body, html {
   width: 100%;
   height: 100%;
   overflow: hidden;
-  font-family: 'Roboto', sans-serif;
+  font-family: 'KoHo','Roboto', sans-serif;
   color: rgba(0, 0, 0, 0.8);
   background-color: #4defc608;
 }
@@ -38,7 +38,6 @@ footer {
   text-align: center;
   color: #000000;
   font-size: 20px;
-  font-family: 'Roboto',sans-serif;
   padding: 0.5em;
 }
 
@@ -78,7 +77,6 @@ a {
   left: 50%;
   transform: translate(-50%, -50%);
   font-size: 28px;
-  font-family: 'KoHo', 'Roboto',sans-serif;
   background-color: #ade4af;
   padding: 1em;
   border-radius: 10px;
@@ -101,7 +99,6 @@ a {
 
 #training {
   position: absolute;
-  font-family: 'KoHo', 'Roboto',sans-serif;
   top: 0;
   right: 0;
   width: 300px;
