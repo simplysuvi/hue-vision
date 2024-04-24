@@ -55,8 +55,8 @@ window.ui = {
     if (this.state == 'collecting' && this.nExamples == 25) {
       this.showInfo(
         '<h3>Great job! 👌</h3>' +
-          "Now that you have a handful of samples, let's train the machine learning model!<br> " +
-          'Hit the `Start Training` button in the top right corner!',
+          "Now that you have a handful of samples, let's train the machine learning model!<br><br> " +
+          'Hit the Start Training button in the top right corner!',
       );
     }
     if (this.state == 'trained' && this.nExamples == 50) {
