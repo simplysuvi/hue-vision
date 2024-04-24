@@ -81,9 +81,9 @@ window.ui = {
     if (this.nTrainings == 1) {
       this.state = 'trained';
       this.showInfo(
-        '<h3>Awesome! 😍</h3>' +
+        '<h3>Awesome!</h3>' +
           'The green circle should start following your eyes around.<br>' +
-          "The accuracy may not be the best initially. The more you train the model, the better the accuracy. 😅<br>" +
+          "The accuracy may not be the best initially. The more you train the model, the better the accuracy.<br>" +
           "Let's collect more training data! Keep following the mouse cursor and hitting space.",
       );
     } else if (this.nTrainings == 2) {
@@ -97,7 +97,7 @@ window.ui = {
     } else if (this.nTrainings == 3) {
       this.state = 'trained_thrice';
       this.showInfo(
-        'If your model is overfitting, remember you can reset it anytime 👻',
+        'If your model is overfitting, remember you can reset it anytime.',
       );
     } else if (this.nTrainings == 4) {
       this.state = 'trained_thrice';
