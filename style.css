@@ -104,6 +104,7 @@ a {
   width: 300px;
   background-color: lightblue;
   padding: 0.5em;
+  font-weight: bold;
 }
 
 #training table {
