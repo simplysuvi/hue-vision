@@ -12,7 +12,7 @@
   <link href="https://fonts.googleapis.com/css?family=Roboto|Source+Code+Pro" rel="stylesheet">
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=KoHo&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="normalize.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
   <link rel="stylesheet" href="style.css">
 </head>
 
@@ -31,6 +31,10 @@
   </div>
 
   <div id="training">
+    <div class="panel-header">
+      <h3>Training Panel</h3>
+      <button id="help-button" class="icon-button" title="Show Help">?</button>
+    </div>
     <table>
       <tr>
         <td>Training samples</td>
@@ -55,12 +59,15 @@
     </table><br>
     <div class="buttonwrap">
       <div class="buttonrow">
+        <button id="start-calibration">Calibration</button>
         <button id="start-training" disabled>Start Training</button>
-        <button id="reset-model" disabled>Reset Model</button>
       </div>
       <div class="buttonrow">
         <button id="draw-heatmap" disabled>Draw Heatmap</button>
-        <button id="clear-heatmap" disabled>Clear Heatmap</button>
+        <button id="customize-target" disabled>Customize Target</button>
+      </div>
+      <div class="buttonrow">
+        <button id="reset-model" disabled>Reset Model</button>
       </div>
       <div class="buttonrow">
         <button id="store-data" disabled>Save Dataset</button>
@@ -85,12 +92,44 @@
   <canvas id="eyes" width="55" height="25"></canvas>
 
   <div id="target"></div>
+  
+  <div id="settings-panel" class="hidden">
+    <div class="panel-header">
+      <h3>Target Settings</h3>
+      <button id="close-settings" class="icon-button" title="Close Settings">×</button>
+    </div>
+    <div class="settings-content">
+      <div class="setting-group">
+        <label for="target-size">Size:</label>
+        <input type="range" id="target-size" min="20" max="80" value="40" class="slider">
+      </div>
+      <div class="setting-group">
+        <label for="target-color">Color:</label>
+        <select id="target-color">
+          <option value="default">Default Orange</option>
+          <option value="blue">Blue</option>
+          <option value="green">Green</option>
+          <option value="purple">Purple</option>
+          <option value="red">Red</option>
+        </select>
+      </div>
+      <div class="setting-group">
+        <label for="target-shape">Shape:</label>
+        <select id="target-shape">
+          <option value="circle">Circle</option>
+          <option value="square">Square</option>
+          <option value="triangle">Triangle</option>
+          <option value="star">Star</option>
+        </select>
+      </div>
+    </div>
+  </div>
 
 
   <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
     crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.5.0"></script>
-  <script src="js/vendor/clmtrackr.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/clmtrackr@1.1.2/build/clmtrackr.min.js"></script>
   <script src="js/globals.js"></script>
   <script src="js/ui.js"></script>
   <script src="js/facetracker.js"></script>

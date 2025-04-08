@@ -53,9 +53,8 @@ window.training = {
   },
 
   fitModel: function() {
-    // TODO Set params in UI?
     this.inTraining = true;
-    const epochs = 10;
+    const epochs = 20; // Increased from 10 to 20 for better training
 
     let batchSize = Math.floor(dataset.train.n * 0.1);
     batchSize = Math.max(2, Math.min(batchSize, 64));
@@ -87,12 +86,21 @@ window.training = {
       shuffle: true,
       validationData: [dataset.val.x, dataset.val.y],
       callbacks: {
+        onEpochBegin: async function(epoch) {
+          // Show progress at the beginning of each epoch
+          ui.showTrainingProgress(epoch, epochs, 
+            epoch > 0 ? bestTrainLoss : 0, 
+            epoch > 0 ? bestValLoss : 0);
+        },
         onEpochEnd: async function(epoch, logs) {
           console.info('Epoch', epoch, 'losses:', logs);
           training.epochsTrained += 1;
           ui.setContent('n-epochs', training.epochsTrained);
           ui.setContent('train-loss', logs.loss.toFixed(5));
           ui.setContent('val-loss', logs.val_loss.toFixed(5));
+          
+          // Update progress bar
+          ui.showTrainingProgress(epoch + 1, epochs, logs.loss, logs.val_loss);
 
           if (logs.val_loss < bestValLoss) {
             // Save model
