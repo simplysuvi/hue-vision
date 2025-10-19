@@ -1,5 +1,6 @@
 window.ui = {
   state: 'loading',
+  phase: 'training', // training, session, heatmap
   readyToCollect: false,
   nExamples: 0,
   nTrainings: 0,
@@ -33,9 +34,15 @@ window.ui = {
   },
 
   onFoundFace: function() {
+    this.setContent('face-detected', 'Yes');
+    $('[data-content="face-detected"]').addClass('detected');
+    this.readyToCollect = true;
+    $('#start-calibration').prop('disabled', false);
+    if (dataset.train.n >= 2) {
+      $('#start-training').prop('disabled', false);
+    }
     if (this.state == 'finding face') {
       this.state = 'collecting';
-      this.readyToCollect = true;
       this.showInfo(
         "<h3>Let's start!</h3>" +
           'Collect data points by moving your mouse and following the cursor with your eyes and hitting the space key repeatedly.<br><br>' +
@@ -43,6 +50,14 @@ window.ui = {
         true,
       );
     }
+  },
+
+  onFaceNotFound: function() {
+    this.setContent('face-detected', 'No');
+    $('[data-content="face-detected"]').removeClass('detected');
+    this.readyToCollect = false;
+    $('#start-calibration').prop('disabled', true);
+    $('#start-training').prop('disabled', true);
   },
   
   toggleAutoCollect: function() {
@@ -109,7 +124,7 @@ window.ui = {
     // Call this when training is finished.
     this.nTrainings += 1;
     $('#target').css('opacity', '0.9');
-    $('#draw-heatmap').prop('disabled', false);
+    $('#start-session').prop('disabled', false);
     $('#customize-target').prop('disabled', false);
     $('#reset-model').prop('disabled', false);
     $('#store-model').prop('disabled', false);
@@ -119,10 +134,8 @@ window.ui = {
       this.state = 'trained';
       this.showInfo(
         '<h3>Awesome!</h3>' +
-          'The target should start following your eyes around.<br>' +
-          "The accuracy may not be the best initially. The more you train the model, the better the accuracy.<br>" +
-          "You can customize the target's appearance using the 'Customize Target' button.<br>" +
-          "Let's collect more training data! Keep following the mouse cursor and hitting space.",
+          'The model has been trained. Click the "Start Session" button to begin eye tracking.<br>' +
+          "You can continue to collect more data and retrain the model to improve accuracy.",
       );
     } else if (this.nTrainings == 2) {
       this.state = 'trained_twice';
@@ -144,6 +157,30 @@ window.ui = {
           'Check this space for more! 😄',
       );
     }
+  },
+
+  showPhase: function(phase) {
+    this.phase = phase;
+    $('#training-phase').addClass('hidden');
+    $('#session-phase').addClass('hidden');
+    $('#heatmap-phase').addClass('hidden');
+    $('#' + phase + '-phase').removeClass('hidden');
+  },
+
+  initSessionControls: function() {
+    $('#start-session').click(() => {
+      this.showPhase('session');
+    });
+
+    $('#new-session').click(() => {
+      this.showPhase('session');
+      heatmap.clearHeatmap();
+    });
+
+    $('#retrain-model').click(() => {
+      this.showPhase('training');
+      heatmap.clearHeatmap();
+    });
   },
   
   showTrainingProgress: function(epoch, totalEpochs, loss, valLoss) {
@@ -177,7 +214,8 @@ window.ui = {
   },
   
   displayHelp: function() {
-    this.showInfo(
+    const helpContent =
+      '<button id="close-help" class="icon-button">×</button>' +
       '<h3>Keyboard Shortcuts</h3>' +
       '<ul style="list-style-type: none; padding-left: 0;">' +
       '<li><strong>Space</strong> - Capture training sample</li>' +
@@ -194,9 +232,18 @@ window.ui = {
       '<li><strong>Auto-collection</strong> - Automatically collect samples while you look around</li>' +
       '<li><strong>Target Customization</strong> - Change the size, color, and shape of the target</li>' +
       '<li><strong>Heatmap</strong> - Visualize model accuracy across the screen</li>' +
-      '</ul>',
-      true
-    );
+      '</ul>';
+
+    $('#help-modal').html(helpContent);
+    $('#modal-overlay, #help-modal').removeClass('hidden');
+
+    $('#close-help').click(function() {
+      ui.hideHelp();
+    });
+  },
+
+  hideHelp: function() {
+    $('#modal-overlay, #help-modal').addClass('hidden');
   },
   
   startCalibration: function() {
@@ -349,3 +396,7 @@ window.ui = {
     }
   }
 };
+
+$(document).ready(function() {
+  ui.initSessionControls();
+});

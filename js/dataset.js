@@ -11,6 +11,19 @@ window.dataset = {
     x: null,
     y: null,
   },
+  session: {
+    n: 0,
+    x: [],
+    y: [],
+  },
+
+  clearSession: function() {
+    this.session = {
+      n: 0,
+      x: [],
+      y: [],
+    };
+  },
 
   getImage: function() {
     // Capture the current image in the eyes canvas as a tensor.

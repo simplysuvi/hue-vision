@@ -96,8 +96,8 @@ window.training = {
           console.info('Epoch', epoch, 'losses:', logs);
           training.epochsTrained += 1;
           ui.setContent('n-epochs', training.epochsTrained);
-          ui.setContent('train-loss', logs.loss.toFixed(5));
-          ui.setContent('val-loss', logs.val_loss.toFixed(5));
+          ui.setContent('train-loss', (100 * (1 - logs.loss)).toFixed(2) + '%');
+          ui.setContent('val-loss', (100 * (1 - logs.val_loss)).toFixed(2) + '%');
           
           // Update progress bar
           ui.showTrainingProgress(epoch + 1, epochs, logs.loss, logs.val_loss);
@@ -121,8 +121,8 @@ window.training = {
           training.epochsTrained -= epochs - bestEpoch;
           console.info('Loading best epoch:', training.epochsTrained);
           ui.setContent('n-epochs', training.epochsTrained);
-          ui.setContent('train-loss', bestTrainLoss.toFixed(5));
-          ui.setContent('val-loss', bestValLoss.toFixed(5));
+          ui.setContent('train-loss', (100 * (1 - bestTrainLoss)).toFixed(2) + '%');
+          ui.setContent('val-loss', (100 * (1 - bestValLoss)).toFixed(2) + '%');
 
           training.currentModel = await tf.loadLayersModel(bestModelPath);
 

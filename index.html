@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
-  <title>HUE Vision &#128083;</title>
+  <title>HUE Vision</title>
   <meta name="description" content="A web-based application for eye tracking using facial recognition and machine learning.">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -17,10 +17,8 @@
 </head>
 
 <body>
-  <!--[if lte IE 9]>
-  <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
-  <![endif]-->
-
+  <div id="modal-overlay" class="hidden"></div>
+  <div id="help-modal" class="hidden"></div>
   <canvas id="heatMap"></canvas>
 
 
@@ -30,54 +28,93 @@
     To continue, Please grant access to your webcam. 📷
   </div>
 
-  <div id="training">
-    <div class="panel-header">
-      <h3>Training Panel</h3>
-      <button id="help-button" class="icon-button" title="Show Help">?</button>
+  <div id="main-content">
+    <div id="training-phase">
+      <div id="training" class="panel">
+        <div class="panel-header">
+          <h3>Training Panel</h3>
+          <button id="help-button" class="icon-button" title="Show Help">?</button>
+        </div>
+        <table>
+          <tr>
+            <td>Data Points Collected</td>
+            <td data-content="n-train">0</td>
+          </tr>
+          <tr>
+            <td>Test Points Collected</td>
+            <td data-content="n-val">0</td>
+          </tr>
+          <tr>
+            <td>Training Cycles Completed</td>
+            <td data-content="n-epochs">0</td>
+          </tr>
+          <tr>
+            <td>Model Accuracy</td>
+            <td data-content="train-loss">?</td>
+          </tr>
+          <tr>
+            <td>Test Accuracy</td>
+            <td data-content="val-loss">?</td>
+          </tr>
+          <tr>
+            <td>Face Detected</td>
+            <td data-content="face-detected">No</td>
+          </tr>
+        </table><br>
+        <div class="buttonwrap">
+          <div class="buttonrow">
+            <button id="start-calibration">Calibration</button>
+            <button id="start-training" disabled>Start Training</button>
+          </div>
+          <div class="buttonrow">
+            <button id="reset-model" disabled>Reset Model</button>
+            <button id="customize-target" disabled>Customize Target</button>
+          </div>
+          <div class="buttonrow">
+            <button id="store-data" disabled>Save Dataset</button>
+            <button id="load-data">Load Dataset</button>
+            <input type="file" id="data-uploader">
+          </div>
+          <div class="buttonrow">
+            <button id="store-model" disabled>Save Model</button>
+            <button id="load-model">Load Model</button>
+            <input type="file" id="model-uploader" multiple>
+          </div>
+          <div class="buttonrow">
+            <button id="start-session" class="emph" disabled>Start Session</button>
+          </div>
+        </div>
+      </div>
     </div>
-    <table>
-      <tr>
-        <td>Training samples</td>
-        <td data-content="n-train">0</td>
-      </tr>
-      <tr>
-        <td>Validation samples</td>
-        <td data-content="n-val">0</td>
-      </tr>
-      <tr>
-        <td>Epochs trained</td>
-        <td data-content="n-epochs">0</td>
-      </tr>
-      <tr>
-        <td>Training loss</td>
-        <td data-content="train-loss">?</td>
-      </tr>
-      <tr>
-        <td>Validation loss</td>
-        <td data-content="val-loss">?</td>
-      </tr>
-    </table><br>
-    <div class="buttonwrap">
-      <div class="buttonrow">
-        <button id="start-calibration">Calibration</button>
-        <button id="start-training" disabled>Start Training</button>
+
+    <div id="session-phase" class="hidden">
+      <div id="session" class="panel">
+        <div class="panel-header">
+          <h3>Session Panel</h3>
+        </div>
+        <div class="buttonwrap">
+          <div class="buttonrow">
+            <button id="start-tracking">Start Tracking</button>
+            <button id="stop-tracking" disabled>Stop Tracking</button>
+          </div>
+          <div class="buttonrow">
+            <button id="draw-heatmap" class="emph" disabled>Draw Heatmap</button>
+          </div>
+        </div>
       </div>
-      <div class="buttonrow">
-        <button id="draw-heatmap" disabled>Draw Heatmap</button>
-        <button id="customize-target" disabled>Customize Target</button>
-      </div>
-      <div class="buttonrow">
-        <button id="reset-model" disabled>Reset Model</button>
-      </div>
-      <div class="buttonrow">
-        <button id="store-data" disabled>Save Dataset</button>
-        <button id="load-data">Load Dataset</button>
-        <input type="file" id="data-uploader">
-      </div>
-      <div class="buttonrow">
-        <button id="store-model" disabled>Save Model</button>
-        <button id="load-model">Load Model</button>
-        <input type="file" id="model-uploader" multiple>
+    </div>
+
+    <div id="heatmap-phase" class="hidden">
+      <div id="heatmap" class="panel">
+        <div class="panel-header">
+          <h3>Heatmap Panel</h3>
+        </div>
+        <div class="buttonwrap">
+          <div class="buttonrow">
+            <button id="new-session">New Session</button>
+            <button id="retrain-model">Retrain Model</button>
+          </div>
+        </div>
       </div>
     </div>
   </div>

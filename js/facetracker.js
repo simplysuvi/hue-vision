@@ -86,6 +86,8 @@ $(document).ready(function() {
         facetracker.trackFace(facetracker.currentPosition);
         facetracker.ctrack.draw(facetracker.overlay);
         ui.onFoundFace();
+      } else {
+        ui.onFaceNotFound();
       }
     },
 

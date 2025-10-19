@@ -1,14 +1,38 @@
+const tracking = {
+  active: false,
+  interval: null,
+
+  start: function() {
+    dataset.clearSession();
+    this.active = true;
+    $('#start-tracking').prop('disabled', true);
+    $('#stop-tracking').prop('disabled', false);
+    $('#draw-heatmap').prop('disabled', true);
+  },
+
+  stop: function() {
+    this.active = false;
+    $('#start-tracking').prop('disabled', false);
+    $('#stop-tracking').prop('disabled', true);
+    $('#draw-heatmap').prop('disabled', false);
+  },
+};
+
 $(document).ready(function() {
   const $target = $('#target');
   const targetSize = $target.outerWidth();
 
   function moveTarget() {
     // Move the model target to where we predict the user is looking to
-    if (training.currentModel == null || training.inTraining) {
+    if (training.currentModel == null || training.inTraining || !tracking.active) {
       return;
     }
 
     training.getPrediction().then(prediction => {
+      dataset.session.n += 1;
+      dataset.session.x.push(prediction[0]);
+      dataset.session.y.push(prediction[1]);
+
       const left = prediction[0] * ($('body').width() - targetSize);
       const top = prediction[1] * ($('body').height() - targetSize);
 
@@ -32,6 +56,13 @@ $(document).ready(function() {
   // Map functions to keys and buttons:
 
   $('body').keyup(function(e) {
+    // Escape key - Close help modal
+    if (e.keyCode === 27) {
+      ui.hideHelp();
+      e.preventDefault();
+      return false;
+    }
+
     // Space key - Capture example
     if (e.keyCode === 32 && ui.readyToCollect) {
       dataset.captureExample();
@@ -94,12 +125,21 @@ $(document).ready(function() {
     training.fitModel();
   });
 
+  $('#start-tracking').click(function(e) {
+    tracking.start();
+  });
+
+  $('#stop-tracking').click(function(e) {
+    tracking.stop();
+  });
+
   $('#reset-model').click(function(e) {
     training.resetModel();
   });
 
   $('#draw-heatmap').click(function(e) {
-    heatmap.drawHeatmap(dataset, training.currentModel);
+    ui.showPhase('heatmap');
+    heatmap.drawHeatmap(dataset);
   });
 
   $('#clear-heatmap').click(function(e) {
