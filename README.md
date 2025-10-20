@@ -1,35 +1,53 @@
-# HUE Vision: Eye Tracking using TensorFlow JS and clmtrackr
+### **HUE Vision: Browser-Based Eye Tracking with TensorFlow.js and MediaPipe FaceMesh**
 
-HUE Vision is a web-based application that harnesses the power of eye tracking technology using web technologies and machine learning. This project serves as a demonstration of real-time gaze prediction directly in the browser.
+**HUE Vision** is a web-based application that brings real-time eye tracking and gaze prediction directly into the browser - powered by **TensorFlow.js** and **MediaPipe FaceMesh**.
+It showcases how on-device computer vision and machine learning can work seamlessly together for intuitive, privacy-friendly gaze interaction.
 
-# Demo
-Check it out: https://simplysuvi.github.io/hue-vision/
+---
 
-## Features
-- Real-time eye tracking using the webcam
-- Integration of machine learning with clmtrackr.js for facial feature detection
-- Training and prediction of gaze direction using TensorFlow.js
-- Heatmap visualization for model evaluation
+**Demo**: https://simplysuvi.com/hue-vision/
 
-## Technologies Used
-- JavaScript
-- TensorFlow.js
-- clmtrackr.js
-- HTML/CSS
-- jQuery
+---
 
-## Getting Started
-1. Clone this repository to your local system.
-2. Open `index.html` in a web browser that supports getUserMedia (e.g., Chrome or Firefox).
-3. Follow the on-screen instructions to start the webcam and begin eye tracking.
+#### **Features**
 
-## How to Use
-1. Allow access to your webcam when prompted.
-2. Position your face within the webcam frame.
-3. Follow the instructions to start training the machine learning model.
-4. Use your gaze to interact with the screen in real time.
-5. Explore the heatmap visualization to evaluate the model's performance.
+* Real-time eye tracking using webcam input
+* Lightweight facial landmark detection via **MediaPipe FaceMesh** (replacing clmtrackr)
+* On-device machine learning model for gaze prediction using **TensorFlow.js**
+* Live heatmap visualization to evaluate gaze prediction accuracy
+* Clean, modern overlay with subtle facial mesh rendering and eye focus tracking
+* Fully privacy-preserving - no data leaves your browser
 
-## Credits
-- This project was inspired by advanced eye tracking technologies such as Apple's Vision Pro.
-- Special thanks to the creators of [clmtrackr.js](https://github.com/auduno/clmtrackr) and TensorFlow.js for their invaluable contributions to computer vision and machine learning in the browser.
+---
+
+#### **Technologies Used**
+
+* **JavaScript** (ES6)
+* **TensorFlow.js**
+* **MediaPipe FaceMesh**
+* **HTML5 / CSS3**
+* **jQuery**
+
+---
+
+#### **How to Use**
+
+1. Allow webcam access and center your face within the frame.
+2. Start the **Calibration** process to map gaze positions.
+3. Begin **Training** — the model learns your eye-to-screen relationship.
+4. Once trained, enable **Tracking** to predict gaze movement in real time.
+5. View the **Heatmap** to visualize gaze concentration and model accuracy.
+
+---
+
+#### **Recent Updates**
+
+* Switched from **clmtrackr** to **MediaPipe FaceMesh** for improved accuracy and stability
+* Added **subtle mesh visualization** for cleaner UI with highlighted eye contours
+* Removed legacy bounding box visuals and retuned the eye crop for precise focus
+* Refined **UI design**, rendering performance, and color balance for a smoother experience
+
+---
+
+* Inspired by next-generation spatial and gaze tracking systems like **Apple Vision Pro**
+* Built using **TensorFlow.js** and **MediaPipe** for real-time, on-device vision inference

@@ -163,10 +163,21 @@
   </div>
 
 
-  <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-    crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.5.0"></script>
-  <script src="https://cdn.jsdelivr.net/npm/clmtrackr@1.1.2/build/clmtrackr.min.js"></script>
+    <!-- JS dependencies -->
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js" 
+          integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" 
+          crossorigin="anonymous"></script>
+
+  <!-- TensorFlow.js -->
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.15.0/dist/tf.min.js"></script>
+
+  <!-- MediaPipe FaceMesh -->
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/face_mesh.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js"></script>
+
+
+  <!-- Your app scripts -->
   <script src="js/globals.js"></script>
   <script src="js/ui.js"></script>
   <script src="js/facetracker.js"></script>
@@ -175,6 +186,7 @@
   <script src="js/training.js"></script>
   <script src="js/heat.js"></script>
   <script src="js/main.js"></script>
+
 </body>
 
 </html>
