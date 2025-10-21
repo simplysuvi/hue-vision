@@ -24,6 +24,11 @@ body, html {
   left: 440px;
   border-radius: 8px;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  display: none;
+}
+
+#overlay {
+  display: none;
 }
 
 #target {
@@ -54,6 +59,10 @@ a {
 
 a:hover {
   text-decoration: underline;
+  color: #e8864b;
+}
+
+footer .fa-heart {
   color: #e8864b;
 }
 
@@ -129,7 +138,7 @@ a:hover {
   right: 15px;
 }
 
-#training {
+#training, #session, #heatmap {
   position: absolute;
   top: 20px;
   right: 20px;
@@ -152,6 +161,15 @@ a:hover {
   font-size: 18px;
   font-weight: 600;
   color: #1d1d1f;
+}
+
+.panel-header-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.panel-content.collapsed {
+  display: none;
 }
 
 .icon-button {
@@ -333,39 +351,96 @@ select:focus {
   background: linear-gradient(135deg, #ff7a7a, #ff1a1a);
 }
 
-#training table {
+.status-panel, .training-data-panel {
+  margin-bottom: 1em;
+  background-color: #f9f9f9;
+  border-radius: 12px;
+  padding: 5px;
+}
+
+.status-panel table, .training-data-panel table {
   width: 100%;
   font-size: 14px;
   font-weight: 400;
-  margin-bottom: 1.5em;
   border-collapse: collapse;
 }
 
-#training table tr {
+.status-panel table tr, .training-data-panel table tr {
   border-bottom: 1px solid rgba(0, 0, 0, 0.05);
 }
 
-#training table tr:last-child {
+.status-panel table tr:last-child, .training-data-panel table tr:last-child {
   border-bottom: none;
 }
 
-#training table td {
-  padding: 10px 0;
+.status-panel table td, .training-data-panel table td {
+  padding: 10px;
   color: #1d1d1f;
 }
 
-#training table td:nth-child(2) {
+.status-panel table td:nth-child(2), .training-data-panel table td:nth-child(2) {
   text-align: right;
   font-weight: 500;
   color: #cf7e45;
 }
 
 [data-content="face-detected"].detected {
-  color: #28a745; /* A green color */
+  color: #28a745!important; /* A green color */
+  font-weight: bold;
+}
+
+[data-content="face-detected"].not-detected {
+  color: #dc3545!important; /* A red color */
+  font-weight: bold;
+}
+
+[data-content="webcam-status"].connected {
+  color: #28a745!important; /* A green color */
+  font-weight: bold;
+}
+
+[data-content="webcam-status"].disconnected {
+  color: #dc3545!important; /* A red color */
+  font-weight: bold;
+}
+
+#spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-left-color: #f27121;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
 }
 
 .buttonwrap {
   text-align: center;
+}
+
+.button-group {
+  margin-bottom: 1em;
+  padding: 12px;
+  background-color: #f9f9f9;
+  border-radius: 12px;
+}
+
+#session-start-container {
+  display: none;
+  position: fixed;
+  bottom: 60px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
 }
 
 .buttonrow {
@@ -380,17 +455,23 @@ button {
   z-index: 11;
   cursor: pointer;
   font-size: 12px;
-  font-weight: 400;
-  padding: 8px 16px;
+  font-weight: 500;
+  padding: 10px 16px;
   margin: 0;
   width: 140px;
   font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'SF Pro Icons', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  background: linear-gradient(135deg, #f9a66c, #f27121);
-  color: white;
+  background-color: #e9e9eb;
+  color: #1d1d1f;
   border: none;
-  border-radius: 980px;
+  border-radius: 8px;
   transition: all 0.2s ease;
   letter-spacing: -0.01em;
+}
+
+button#start-detection, button.emph {
+  background: linear-gradient(135deg, #f9a66c, #f27121);
+  color: white;
+  font-weight: 600;
 }
 
 button:hover {

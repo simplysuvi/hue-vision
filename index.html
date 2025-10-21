@@ -13,6 +13,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=KoHo&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
   <link rel="stylesheet" href="style.css">
 </head>
 
@@ -33,58 +34,80 @@
       <div id="training" class="panel">
         <div class="panel-header">
           <h3>Training Panel</h3>
-          <button id="help-button" class="icon-button" title="Show Help">?</button>
+          <div class="panel-header-buttons">
+            <button id="toggle-panel-button" class="icon-button" title="Collapse Panel">-</button>
+            <button id="help-button" class="icon-button" title="Show Help">?</button>
+          </div>
         </div>
-        <table>
-          <tr>
-            <td>Data Points Collected</td>
-            <td data-content="n-train">0</td>
-          </tr>
-          <tr>
-            <td>Test Points Collected</td>
-            <td data-content="n-val">0</td>
-          </tr>
-          <tr>
-            <td>Training Cycles Completed</td>
-            <td data-content="n-epochs">0</td>
-          </tr>
-          <tr>
-            <td>Model Accuracy</td>
-            <td data-content="train-loss">?</td>
-          </tr>
-          <tr>
-            <td>Test Accuracy</td>
-            <td data-content="val-loss">?</td>
-          </tr>
-          <tr>
-            <td>Face Detected</td>
-            <td data-content="face-detected">No</td>
-          </tr>
-        </table><br>
+        <div class="panel-content">
+          <div class="status-panel">
+          <table>
+            <tr>
+              <td>Webcam</td>
+              <td data-content="webcam-status">Disconnected</td>
+            </tr>
+            <tr>
+              <td>Face Detected</td>
+              <td data-content="face-detected">No</td>
+            </tr>
+          </table>
+        </div>
+        <div class="training-data-panel">
+          <table>
+            <tr>
+              <td>Data Points Collected</td>
+              <td data-content="n-train">0</td>
+            </tr>
+            <tr>
+              <td>Test Points Collected</td>
+              <td data-content="n-val">0</td>
+            </tr>
+            <tr>
+              <td>Training Cycles Completed</td>
+              <td data-content="n-epochs">0</td>
+            </tr>
+            <tr>
+              <td>Model Accuracy</td>
+              <td data-content="train-loss">?</td>
+            </tr>
+            <tr>
+              <td>Test Accuracy</td>
+              <td data-content="val-loss">?</td>
+            </tr>
+          </table>
+        </div>
         <div class="buttonwrap">
-          <div class="buttonrow">
-            <button id="start-calibration">Calibration</button>
-            <button id="start-training" disabled>Start Training</button>
+          <div class="button-group">
+            <div class="buttonrow">
+              <button id="start-detection">Start Detection</button>
+            </div>
+            <div class="buttonrow">
+              <button id="start-calibration" disabled>Calibration</button>
+              <button id="start-training" disabled>Start Training</button>
+            </div>
           </div>
-          <div class="buttonrow">
-            <button id="reset-model" disabled>Reset Model</button>
-            <button id="customize-target" disabled>Customize Target</button>
-          </div>
-          <div class="buttonrow">
-            <button id="store-data" disabled>Save Dataset</button>
-            <button id="load-data">Load Dataset</button>
-            <input type="file" id="data-uploader">
-          </div>
-          <div class="buttonrow">
-            <button id="store-model" disabled>Save Model</button>
-            <button id="load-model">Load Model</button>
-            <input type="file" id="model-uploader" multiple>
-          </div>
-          <div class="buttonrow">
-            <button id="start-session" class="emph" disabled>Start Session</button>
+          <div class="button-group">
+            <div class="buttonrow">
+              <button id="reset-model" disabled>Reset Model</button>
+              <button id="customize-target" disabled>Customize Target</button>
+            </div>
+            <div class="buttonrow">
+              <button id="store-data" disabled>Save Dataset</button>
+              <button id="load-data">Load Dataset</button>
+              <input type="file" id="data-uploader">
+            </div>
+            <div class="buttonrow">
+              <button id="store-model" disabled>Save Model</button>
+              <button id="load-model">Load Model</button>
+              <input type="file" id="model-uploader" multiple>
+            </div>
           </div>
         </div>
       </div>
+    </div>
+    <div id="session-start-container">
+      <button id="start-session" class="emph" disabled>Start Session</button>
+    </div>
     </div>
 
     <div id="session-phase" class="hidden">
@@ -123,12 +146,14 @@
   <canvas id="overlay" width="400" height="300"></canvas>
 
   <footer>
-    Made with ❤ by Suvrat Jain.
+    Made with <i class="fas fa-heart"></i> by <a href="https://simplysuvi.com/" target="_blank">Suvrat Jain</a>.
   </footer>
 
   <canvas id="eyes" width="55" height="25"></canvas>
 
   <div id="target"></div>
+
+  <div id="spinner" class="hidden"></div>
   
   <div id="settings-panel" class="hidden">
     <div class="panel-header">
@@ -171,7 +196,7 @@
   <!-- TensorFlow.js -->
   <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.15.0/dist/tf.min.js"></script>
 
-  <!-- MediaPipe FaceMesh -->
+  <!-- MediaPipe FaceMesh (REPLACES clmtrackr) -->
   <script src="https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/face_mesh.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js"></script>

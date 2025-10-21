@@ -15,6 +15,11 @@ const tracking = {
     $('#start-tracking').prop('disabled', false);
     $('#stop-tracking').prop('disabled', true);
     $('#draw-heatmap').prop('disabled', false);
+    ui.showInfo(
+      '<h3>Tracking Stopped</h3>' +
+      'You can now <strong>Draw Heatmap</strong> to visualize the session, or <strong>Start Tracking</strong> again.',
+      true
+    );
   },
 };
 
@@ -117,6 +122,11 @@ $(document).ready(function() {
     }
   });
 
+  $('#start-detection').click(function(e) {
+    facetracker.startDetection();
+    $(this).prop('disabled', true);
+  });
+
   $('#start-calibration').click(function(e) {
     ui.startCalibration();
   });
@@ -188,6 +198,17 @@ $(document).ready(function() {
   // Help button event handler
   $('#help-button').click(function() {
     ui.displayHelp();
+  });
+
+  // Toggle panel button event handler
+  $('#toggle-panel-button').click(function() {
+    const $panelContent = $('.panel-content');
+    $panelContent.toggleClass('collapsed');
+    if ($panelContent.hasClass('collapsed')) {
+      $(this).text('+');
+    } else {
+      $(this).text('-');
+    }
   });
   
   // Target customization

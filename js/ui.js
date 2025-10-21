@@ -29,19 +29,24 @@ window.ui = {
   },
 
   onWebcamEnabled: function() {
-    this.state = 'finding face';
-    this.showInfo("Thanks! Now let's detect your face!", true);
+    this.state = 'waiting for detection';
+    this.setContent('webcam-status', 'Connected');
+    $('[data-content="webcam-status"]').removeClass('disconnected').addClass('connected');
+    this.showInfo("Webcam connected. Press <strong>Start Detection</strong> to begin.", true);
   },
 
   onFoundFace: function() {
+    $('#spinner').addClass('hidden');
+    $('#eyes').show();
+    $('#overlay').show();
     this.setContent('face-detected', 'Yes');
-    $('[data-content="face-detected"]').addClass('detected');
+    $('[data-content="face-detected"]').removeClass('not-detected').addClass('detected');
     this.readyToCollect = true;
     $('#start-calibration').prop('disabled', false);
     if (dataset.train.n >= 2) {
       $('#start-training').prop('disabled', false);
     }
-    if (this.state == 'finding face') {
+    if (this.state == 'waiting for detection') {
       this.state = 'collecting';
       this.showInfo(
         "<h3>Let's start!</h3>" +
@@ -54,7 +59,7 @@ window.ui = {
 
   onFaceNotFound: function() {
     this.setContent('face-detected', 'No');
-    $('[data-content="face-detected"]').removeClass('detected');
+    $('[data-content="face-detected"]').removeClass('detected').addClass('not-detected');
     this.readyToCollect = false;
     $('#start-calibration').prop('disabled', true);
     $('#start-training').prop('disabled', true);
@@ -106,7 +111,7 @@ window.ui = {
       this.showInfo(
         '<h3>Great job! 👌</h3>' +
           "Now that you have a handful of samples, let's train the machine learning model!<br><br> " +
-          'Hit the Start Training button in the top right corner!',
+          'Hit the <strong>Start Training</strong> button.',
       );
     }
     if (this.state == 'trained' && this.nExamples == 50) {
@@ -124,6 +129,7 @@ window.ui = {
     // Call this when training is finished.
     this.nTrainings += 1;
     $('#target').css('opacity', '0.9');
+    $('#session-start-container').show();
     $('#start-session').prop('disabled', false);
     $('#customize-target').prop('disabled', false);
     $('#reset-model').prop('disabled', false);
@@ -134,7 +140,7 @@ window.ui = {
       this.state = 'trained';
       this.showInfo(
         '<h3>Awesome!</h3>' +
-          'The model has been trained. Click the "Start Session" button to begin eye tracking.<br>' +
+          'The model has been trained. Click the <strong>Start Session</strong> button at the bottom of the screen to begin eye tracking.<br><br>' +
           "You can continue to collect more data and retrain the model to improve accuracy.",
       );
     } else if (this.nTrainings == 2) {
@@ -170,6 +176,11 @@ window.ui = {
   initSessionControls: function() {
     $('#start-session').click(() => {
       this.showPhase('session');
+      this.showInfo(
+        '<h3>Session Started</h3>' +
+        'Click <strong>Start Tracking</strong> to see the model in action!',
+        true
+      );
     });
 
     $('#new-session').click(() => {

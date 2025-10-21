@@ -52,7 +52,14 @@ $(document).ready(function () {
       };
     },
 
+    startDetection: function() {
+      $('#spinner').removeClass('hidden');
+      initFaceMesh();
+    },
+
     gumFail: function () {
+      ui.setContent('webcam-status', 'Disconnected');
+      $('[data-content="webcam-status"]').removeClass('connected').addClass('disconnected');
       ui.showInfo(
         "There was some problem trying to fetch video from your webcam 😭",
         true
@@ -187,14 +194,12 @@ $(document).ready(function () {
     navigator.mediaDevices
       .getUserMedia({ video: true })
       .then(facetracker.gumSuccess)
-      .then(initFaceMesh)
       .catch(facetracker.gumFail);
   } else if (navigator.getUserMedia) {
     navigator.getUserMedia(
       { video: true },
       (stream) => {
         facetracker.gumSuccess(stream);
-        initFaceMesh();
       },
       facetracker.gumFail
     );
