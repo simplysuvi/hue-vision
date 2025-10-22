@@ -7,6 +7,8 @@ It showcases how on-device computer vision and machine learning can work seamles
 
 **Demo**: https://simplysuvi.com/hue-vision/
 
+**Post**: https://blog.roboflow.com/build-eye-tracking-in-browser/
+
 ---
 
 #### **Features**
